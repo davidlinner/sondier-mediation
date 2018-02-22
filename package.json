@@ -6,8 +6,8 @@
   "typings": "./lib/index.d.ts",
   "scripts": {
     "prepare": "npm run build",
-    "build": "tsc",
-    "test" : "jest"
+    "build": "./node_modules/.bin/tsc",
+    "test": "jest"
   },
   "files": [
     "dist"
@@ -38,5 +38,8 @@
       "\\.ts$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "/src/.*\\.spec\\.ts$"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.104"
   }
 }
