@@ -39,7 +39,7 @@ describe("propose", function () {
         expect(consensus.white).toHaveLength(1);
         expect(consensus.black).toHaveLength(1);
     });
-    it("open positions fairly", function () {
+    it("remaining positions in question fairly", function () {
         var black = [
             { id: "a", value: 10, weight: .5 },
             { id: "b", value: 10, weight: .5 }

@@ -28,8 +28,12 @@ function propose(initial, consensus) {
             }
         };
     });
-    // check value and weight - resolve clear terms and put rest to critical
-    var intermediate = lodash_1.default.reduce(terms, function (results, term) {
+    var critical = [];
+    var results = {
+        black: [],
+        white: []
+    };
+    lodash_1.default.forEach(terms, function (term) {
         var w = term.white;
         var b = term.black;
         var result = {
@@ -50,15 +54,10 @@ function propose(initial, consensus) {
             results.black.push(result);
         }
         else {
-            results.critical.push(term);
+            critical.push(term);
         }
-        return results;
-    }, {
-        black: [],
-        white: [],
-        critical: []
     });
-    var critical = intermediate.critical;
+    // randomly resolve conflicts
     if (critical.length > 0) {
         var d = Math.round(critical.length / 2);
         // randomly pick half of critical items and give to white, rest to black
@@ -69,19 +68,21 @@ function propose(initial, consensus) {
             d--;
         }
         critical.forEach(function (term) {
-            intermediate.black.push({
+            results.black.push({
                 id: term.id,
                 value: term.black.value
             });
         });
         whiteWins.forEach(function (term) {
-            intermediate.white.push({
+            results.white.push({
                 id: term.id,
                 value: term.white.value
             });
         });
     }
-    delete intermediate.critical;
-    return intermediate;
+    return results;
 }
 exports.propose = propose;
+// export function bucketize(initial: Position, proposal: Consensus) {
+//     //return ;
+// }
