@@ -4,6 +4,7 @@ import _ from 'lodash';
 import {Preference} from "./model/Prefernce";
 
 export function propose(initial: Position, consensus?: Consensus): Consensus{
+
     let white = initial.white;
     let black = initial.black;
 
@@ -14,8 +15,10 @@ export function propose(initial: Position, consensus?: Consensus): Consensus{
             consensus.white);
 
         // filter valuations from the initial position where there is consensus yet
-        white = _.filter(white, (item) => !_.find(consent, (i) => i.id == item.id));
-        black = _.filter(black, (item) => !_.find(consent, (i) => i.id == item.id));
+        white = _.filter(white,
+            (item) => !_.find(consent, (i) => i.id == item.id));
+        black = _.filter(black,
+            (item) => !_.find(consent, (i) => i.id == item.id));
     }
 
     let terms  = _.map(white, (v1) => {
@@ -33,8 +36,13 @@ export function propose(initial: Position, consensus?: Consensus): Consensus{
         }
     });
 
-    // check value and weight - resolve clear terms and put rest to critical
-    let intermediate = _.reduce(terms, (results, term)=> {
+    let critical = [];
+    let results = {
+        black: [],
+        white: []
+    }
+
+    _.forEach(terms, (term)=> {
         let w = term.white;
         let b = term.black;
 
@@ -54,19 +62,12 @@ export function propose(initial: Position, consensus?: Consensus): Consensus{
             result.value = b.value;
             results.black.push(result);
         } else {
-            results.critical.push(term);
+            critical.push(term);
         }
 
-        return results;
-    }, {
-        black: [],
-        white: [],
-        critical: []
     });
 
-
-    let critical = intermediate.critical;
-
+    // randomly resolve conflicts
     if(critical.length > 0) {
         let d = Math.round(critical.length / 2);
 
@@ -79,21 +80,23 @@ export function propose(initial: Position, consensus?: Consensus): Consensus{
         }
 
         critical.forEach((term) => {
-            intermediate.black.push({
+            results.black.push({
                 id: term.id,
                 value: term.black.value
             });
         })
 
         whiteWins.forEach((term) => {
-            intermediate.white.push({
+            results.white.push({
                 id: term.id,
                 value: term.white.value
             });
         })
     }
 
-    delete intermediate.critical;
-
-    return intermediate;
+    return results;
 }
+
+// export function bucketize(initial: Position, proposal: Consensus) {
+//     //return ;
+// }

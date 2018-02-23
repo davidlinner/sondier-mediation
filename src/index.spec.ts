@@ -55,7 +55,7 @@ describe("propose", () => {
         expect(consensus.black).toHaveLength(1);
     });
 
-    it("open positions fairly", () => {
+    it("remaining positions in question fairly", () => {
 
         let black = [
             { id: "a", value: 10, weight: .5 },
