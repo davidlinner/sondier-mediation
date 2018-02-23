@@ -29,7 +29,11 @@ function propose(initial, consensus) {
         };
     });
     var critical = [];
-    var results = {
+    var disent = {
+        black: [],
+        white: []
+    };
+    var consent = {
         black: [],
         white: []
     };
@@ -42,16 +46,16 @@ function propose(initial, consensus) {
         };
         if (w.value == b.value) {
             result.value = w.value;
-            results.black.push(result);
-            results.white.push(result);
+            consent.black.push(result);
+            consent.white.push(result);
         }
         else if (w.weight > b.weight) {
             result.value = w.value;
-            results.white.push(result);
+            disent.white.push(result);
         }
         else if (w.weight < b.weight) {
             result.value = b.value;
-            results.black.push(result);
+            disent.black.push(result);
         }
         else {
             critical.push(term);
@@ -68,19 +72,19 @@ function propose(initial, consensus) {
             d--;
         }
         critical.forEach(function (term) {
-            results.black.push({
+            disent.black.push({
                 id: term.id,
                 value: term.black.value
             });
         });
         whiteWins.forEach(function (term) {
-            results.white.push({
+            disent.white.push({
                 id: term.id,
                 value: term.white.value
             });
         });
     }
-    return results;
+    return { disent: disent, consent: consent };
 }
 exports.propose = propose;
 // assume proposal is cleared from equal positions

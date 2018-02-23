@@ -127,7 +127,7 @@ export function bucketize(initial: Position, proposal: Proposal): Proposal[] {
         .sortBy((item) => -item.weight)
         .value();
 
-    let result: Consensus[] = [];
+    let result: Proposal[] = [];
 
     let bucket = {
         black : [],

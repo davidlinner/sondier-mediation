@@ -1,6 +1,6 @@
 import {Preference} from "./Prefernce";
 
-export interface Consensus {
+export interface Proposal {
     black: Array<Preference>;
     white: Array<Preference>;
 }

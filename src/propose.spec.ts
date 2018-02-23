@@ -1,5 +1,4 @@
 import { propose } from './index';
-import {Consensus} from "./model/Proposal";
 
 describe("propose", () => {
 
@@ -67,18 +66,18 @@ describe("propose", () => {
             { id: "b", value: 10, weight: .5 }
         ];
 
-        let consensus : Consensus  = {
+        let consensus  = {
             white : [{id: 'a', value: 5 }],
             black : []
         }
 
-        consensus = propose({black, white}, consensus);
+        let x = propose({black, white}, consensus);
 
-        expect(consensus.consent.white).toHaveLength(1);
-        expect(consensus.consent.black).toHaveLength(1);
+        expect(x.consent.white).toHaveLength(1);
+        expect(x.consent.black).toHaveLength(1);
 
-        expect(consensus.consent.white).toContainEqual({id: 'b', value: 10});
-        expect(consensus.consent.black).toContainEqual({id: 'b', value: 10});
+        expect(x.consent.white).toContainEqual({id: 'b', value: 10});
+        expect(x.consent.black).toContainEqual({id: 'b', value: 10});
     });
 
 
