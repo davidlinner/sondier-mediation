@@ -1,6 +1,6 @@
 {
   "name": "sondier-mediation",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "\"# sondier-mediation\"",
   "main": "./dist/index.js",
   "typings": "./lib/index.d.ts",
