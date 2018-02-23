@@ -3,6 +3,7 @@ import {Consensus} from "./model/Consensus";
 import _ from 'lodash';
 import {Preference} from "./model/Prefernce";
 
+
 export function propose(initial: Position, consensus?: Consensus): Consensus{
 
     let white = initial.white;
@@ -97,9 +98,8 @@ export function propose(initial: Position, consensus?: Consensus): Consensus{
     return results;
 }
 
+// assume proposal is cleared from equal positions
 export function bucketize(initial: Position, proposal: Consensus): Consensus[] {
-
-    // todo: strip euqal positions
 
     let initialBlack = initial.black;
     let initialWhite = initial.white;

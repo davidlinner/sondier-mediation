@@ -60,7 +60,6 @@ describe("bucketize", () => {
         let firstBucket = buckets[0];
 
         expect(firstBucket.black).toEqual(expect.arrayContaining([{id: "a", value: 10}, {id:"b", value: 5}]));
-
         expect(firstBucket.white).toHaveLength(0);
     });
 
