@@ -1,5 +1,5 @@
 import { propose } from './index';
-import {Consensus} from "./model/Consensus";
+import {Consensus} from "./model/Proposal";
 
 describe("propose", () => {
 
@@ -15,8 +15,8 @@ describe("propose", () => {
 
         let consensus = propose({black, white});
 
-        expect(consensus.white).toHaveLength(0);
-        expect(consensus.black).toContainEqual({id: "a", value: 10});
+        expect(consensus.disent.white).toHaveLength(0);
+        expect(consensus.disent.black).toContainEqual({id: "a", value: 10});
     });
 
     it("same positions fairly", () => {
@@ -31,10 +31,10 @@ describe("propose", () => {
 
         let consensus = propose({black, white});
 
-        expect(consensus.white).toHaveLength(1);
-        expect(consensus.white).toContainEqual({id: "a", value: 10});
-        expect(consensus.black).toHaveLength(1);
-        expect(consensus.black).toContainEqual({id: "a", value: 10});
+        expect(consensus.consent.white).toHaveLength(1);
+        expect(consensus.consent.white).toContainEqual({id: "a", value: 10});
+        expect(consensus.consent.black).toHaveLength(1);
+        expect(consensus.consent.black).toContainEqual({id: "a", value: 10});
     });
 
     it("two critical positions fairly", () => {
@@ -49,10 +49,10 @@ describe("propose", () => {
             { id: "b", value: 5, weight: 0.5 }
         ];
 
-        let consensus = propose({black, white});
+        let proposal = propose({black, white});
 
-        expect(consensus.white).toHaveLength(1);
-        expect(consensus.black).toHaveLength(1);
+        expect(proposal.disent.white).toHaveLength(1);
+        expect(proposal.disent.black).toHaveLength(1);
     });
 
     it("remaining positions in question fairly", () => {
@@ -74,11 +74,11 @@ describe("propose", () => {
 
         consensus = propose({black, white}, consensus);
 
-        expect(consensus.white).toHaveLength(1);
-        expect(consensus.black).toHaveLength(1);
+        expect(consensus.consent.white).toHaveLength(1);
+        expect(consensus.consent.black).toHaveLength(1);
 
-        expect(consensus.white).toContainEqual({id: 'b', value: 10});
-        expect(consensus.black).toContainEqual({id: 'b', value: 10});
+        expect(consensus.consent.white).toContainEqual({id: 'b', value: 10});
+        expect(consensus.consent.black).toContainEqual({id: 'b', value: 10});
     });
 
 

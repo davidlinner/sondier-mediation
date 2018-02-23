@@ -1,10 +1,10 @@
 import {Position} from "./model/Position";
-import {Consensus} from "./model/Consensus";
-import _ from 'lodash';
+import {Proposal} from "./model/Proposal";
 import {Preference} from "./model/Prefernce";
 
+import _ from 'lodash';
 
-export function propose(initial: Position, consensus?: Consensus): Consensus{
+export function propose(initial: Position, consensus?: Proposal) {
 
     let white = initial.white;
     let black = initial.black;
@@ -38,7 +38,12 @@ export function propose(initial: Position, consensus?: Consensus): Consensus{
     });
 
     let critical = [];
-    let results = {
+    let disent = {
+        black: [],
+        white: []
+    }
+
+    let consent = {
         black: [],
         white: []
     }
@@ -54,14 +59,14 @@ export function propose(initial: Position, consensus?: Consensus): Consensus{
 
         if(w.value == b.value) {
             result.value = w.value;
-            results.black.push(result);
-            results.white.push(result);
+            consent.black.push(result);
+            consent.white.push(result);
         } else if(w.weight > b.weight ) {
             result.value = w.value;
-            results.white.push(result);
+            disent.white.push(result);
         } else if(w.weight < b.weight){
             result.value = b.value;
-            results.black.push(result);
+            disent.black.push(result);
         } else {
             critical.push(term);
         }
@@ -81,25 +86,25 @@ export function propose(initial: Position, consensus?: Consensus): Consensus{
         }
 
         critical.forEach((term) => {
-            results.black.push({
+            disent.black.push({
                 id: term.id,
                 value: term.black.value
             });
         })
 
         whiteWins.forEach((term) => {
-            results.white.push({
+            disent.white.push({
                 id: term.id,
                 value: term.white.value
             });
         })
     }
 
-    return results;
+    return {disent, consent};
 }
 
 // assume proposal is cleared from equal positions
-export function bucketize(initial: Position, proposal: Consensus): Consensus[] {
+export function bucketize(initial: Position, proposal: Proposal): Proposal[] {
 
     let initialBlack = initial.black;
     let initialWhite = initial.white;
