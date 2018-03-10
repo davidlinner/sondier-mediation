@@ -4,6 +4,19 @@ import {Preference} from "./model/Prefernce";
 
 import * as _ from 'lodash';
 
+/**
+ * Takes the positions of two parties black and white and returns two lists,
+ * one with consents between the two parties and one with dissents. A consent is achieved if the two parties gave equals values to the same item.
+ * A dissent means, the values are different. In case the values differ, the weight decides on the winning position. So the overall sum of weights
+ * for both parties' items must be equal, otherwise the result will be unfair.
+ *
+ * @param {Position} initial - The initial positions of both parties black and white with weights.
+ * @param {Proposal} consensus - An earlier achieved (partial) consensus on the initial positions to be respected when deriving a new proposal.
+ * @returns
+ * 'dissent' contains for both parties a list of items their position was defended for. Obviously the lists are mutually exclusive.
+ * 'consent' contains for both parties a list of items they agree on. This means effectively each item in black is also found in white and vice versa.
+ * An initially passed partial consensus is not included with the result.
+ */
 export function propose(initial: Position, consensus?: Proposal) {
 
     let white = initial.white;
@@ -38,7 +51,7 @@ export function propose(initial: Position, consensus?: Proposal) {
     });
 
     let critical = [];
-    let disent = {
+    let dissent = {
         black: [],
         white: []
     }
@@ -63,10 +76,10 @@ export function propose(initial: Position, consensus?: Proposal) {
             consent.white.push(result);
         } else if(w.weight > b.weight ) {
             result.value = w.value;
-            disent.white.push(result);
+            dissent.white.push(result);
         } else if(w.weight < b.weight){
             result.value = b.value;
-            disent.black.push(result);
+            dissent.black.push(result);
         } else {
             critical.push(term);
         }
@@ -86,19 +99,19 @@ export function propose(initial: Position, consensus?: Proposal) {
         }
 
         critical.forEach((term) => {
-            disent.black.push({
+            dissent.black.push({
                 id: term.id,
                 value: term.black.value
             });
         })
 
         whiteWins.forEach((term) => {
-            disent.white.push({
+            dissent.white.push({
                 id: term.id,
                 value: term.white.value
             });
         })
     }
 
-    return {disent, consent};
+    return {dissent, consent};
 }

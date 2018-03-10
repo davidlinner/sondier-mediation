@@ -14,8 +14,8 @@ describe("propose", () => {
 
         let consensus = propose({black, white});
 
-        expect(consensus.disent.white).toHaveLength(0);
-        expect(consensus.disent.black).toContainEqual({id: "a", value: 10});
+        expect(consensus.dissent.white).toHaveLength(0);
+        expect(consensus.dissent.black).toContainEqual({id: "a", value: 10});
     });
 
     it("same positions fairly", () => {
@@ -50,8 +50,8 @@ describe("propose", () => {
 
         let proposal = propose({black, white});
 
-        expect(proposal.disent.white).toHaveLength(1);
-        expect(proposal.disent.black).toHaveLength(1);
+        expect(proposal.dissent.white).toHaveLength(1);
+        expect(proposal.dissent.black).toHaveLength(1);
     });
 
     it("remaining positions in question fairly", () => {
