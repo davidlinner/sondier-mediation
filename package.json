@@ -1,14 +1,14 @@
 {
   "name": "sondier-mediation",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "\"# sondier-mediation\"",
   "main": "./dist/index.js",
   "typings": "./lib/index.d.ts",
   "scripts": {
-    "prebuild" : "npm run test",
+    "prebuild": "npm run test",
     "build": "./node_modules/.bin/tsc",
     "test": "jest",
-    "patch-release" : "npm run build && git add -A dist && npm version patch -m \"Upgrade to %s for reasons\" && git push --tags"
+    "patch-release": "npm run build && git add -A dist && npm version patch -m \"Upgrade to %s for reasons\" && git push --tags"
   },
   "files": [
     "dist"
