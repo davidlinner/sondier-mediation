@@ -16,5 +16,5 @@ and
 
 ## Documentation
 
-The API documentation can be found [here](docs/index.html).
+The API documentation can be found [here](https://davidlinner.github.io/sondier-mediation/).
  
