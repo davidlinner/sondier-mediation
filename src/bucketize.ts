@@ -3,7 +3,18 @@ import {Proposal} from "./model/Proposal";
 
 import * as _ from 'lodash';
 
-// assume proposal is cleared from equal positions
+/**
+ * Groups the full proposal for the resolution of dissents created by 'propose' into smaller buckets,
+ * containing only one or few preferences for both sites. Uses the weights originally given by the parties black and white
+ * to balance importance of positions.
+ *
+ * @param {Position} initial  The initial positions of both parties black and white with weights.
+ * @param {Proposal} proposal Two mutual exclusive lists of positions respective party is supposed to defend.
+ * @return
+ * A splitted version of grouped the passed 'proposal' balanced by weights.
+ *
+ *
+ */
 export function bucketize(initial: Position, proposal: Proposal): Proposal[] {
 
     let initialBlack = initial.black;
