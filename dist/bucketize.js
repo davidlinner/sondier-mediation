@@ -8,7 +8,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
 }
 exports.__esModule = true;
 var _ = __importStar(require("lodash"));
-// assume proposal is cleared from equal positions
+/**
+ * Groups the full proposal for the resolution of dissents created by 'propose' into smaller buckets,
+ * containing only one or few preferences for both sites. Uses the weights originally given by the parties black and white
+ * to balance importance of positions.
+ *
+ * @param {Position} initial  The initial positions of both parties black and white with weights.
+ * @param {Proposal} proposal Two mutual exclusive lists of positions respective party is supposed to defend.
+ * @return
+ * A splitted version of grouped the passed 'proposal' balanced by weights.
+ *
+ *
+ */
 function bucketize(initial, proposal) {
     var initialBlack = initial.black;
     var initialWhite = initial.white;
