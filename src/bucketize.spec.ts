@@ -1,4 +1,4 @@
-import { bucketize } from './index';
+import { bucketize } from './bucketize';
 
 describe("bucketize", () => {
 
@@ -59,7 +59,7 @@ describe("bucketize", () => {
 
         let firstBucket = buckets[0];
 
-        expect(firstBucket.black).toEqual(expect.arrayContaining([{id: "a", value: 10}, {id:"b", value: 5}]));
+        expect(firstBucket.black).toEqual(expect.arrayContaining([{id: "a", value: 10}, {id:"b", value: 10}]));
         expect(firstBucket.white).toHaveLength(0);
     });
 

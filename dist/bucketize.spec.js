@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-var index_1 = require("./index");
+var bucketize_1 = require("./bucketize");
 describe("bucketize", function () {
     it("equal length", function () {
         var black = [
@@ -17,7 +17,7 @@ describe("bucketize", function () {
         var whiteWins = [
             { id: "b", value: 5 }
         ];
-        var buckets = index_1.bucketize({ black: black, white: white }, { black: blackWins, white: whiteWins });
+        var buckets = bucketize_1.bucketize({ black: black, white: white }, { black: blackWins, white: whiteWins });
         expect(buckets).toHaveLength(1);
         var firstBucket = buckets[0];
         expect(firstBucket.black).toContainEqual({ id: "a", value: 10 });
@@ -37,10 +37,10 @@ describe("bucketize", function () {
             { id: "b", value: 10 }
         ];
         var whiteWins = [];
-        var buckets = index_1.bucketize({ black: black, white: white }, { black: blackWins, white: whiteWins });
+        var buckets = bucketize_1.bucketize({ black: black, white: white }, { black: blackWins, white: whiteWins });
         expect(buckets).toHaveLength(1);
         var firstBucket = buckets[0];
-        expect(firstBucket.black).toEqual(expect.arrayContaining([{ id: "a", value: 10 }, { id: "b", value: 5 }]));
+        expect(firstBucket.black).toEqual(expect.arrayContaining([{ id: "a", value: 10 }, { id: "b", value: 10 }]));
         expect(firstBucket.white).toHaveLength(0);
     });
     it("balance bucket on weight", function () {
@@ -64,7 +64,7 @@ describe("bucketize", function () {
             { id: "b", value: 5 },
             { id: "c", value: 5 }
         ];
-        var buckets = index_1.bucketize({ black: black, white: white }, { black: blackWins, white: whiteWins });
+        var buckets = bucketize_1.bucketize({ black: black, white: white }, { black: blackWins, white: whiteWins });
         expect(buckets).toHaveLength(2);
         var firstBucket = buckets[0];
         expect(firstBucket.black).toContainEqual({ id: "a", value: 10 });

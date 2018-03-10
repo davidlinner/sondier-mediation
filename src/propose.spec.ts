@@ -1,4 +1,4 @@
-import { propose } from './index';
+import { propose } from './propose';
 
 describe("propose", () => {
 
